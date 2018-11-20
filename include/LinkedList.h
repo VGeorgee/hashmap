@@ -18,7 +18,7 @@ typedef struct linkedlist
 
 
 
-LinkedList * initLL();      // Initialize a LinkedList and returns it's pointer
+LinkedList * initLL();      // Initialize a LinkedList and returns its pointer
 
 void getIterators(LinkedList *);    //Allocates LinkedList's iterator array, and fills it with its pointers
 
