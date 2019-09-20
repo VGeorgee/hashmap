@@ -60,13 +60,13 @@ void *get_node(LinkedList *linkedlist, void *node_to_search){
 };
 
 
-void *remove_node(LinkedList *linkedlist, char *s){
+void *remove_node(LinkedList *linkedlist, void *key){
 
     void *value_from_linkedlist;
     NODE *current = linkedlist->HEAD;
     NODE *elozo = NULL;
 
-    while(current && strcmp(current->str, s)) {
+    while(current && linkedlist->equals(current->str, key)) {
             elozo = current;
             current = current->next;
     }
