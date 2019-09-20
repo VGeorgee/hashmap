@@ -1,6 +1,6 @@
 #include "LinkedList.h"
 
-LinkedList *initLL(){
+LinkedList *new_linked_list(){
     LinkedList *nn = malloc(sizeof(LinkedList));
     nn->elements = 0;
     nn->HEAD = NULL;
@@ -8,28 +8,28 @@ LinkedList *initLL(){
     return nn;
 };
 
-void getIterators(LinkedList *ll){
-    if(ll->HEAD){
+void get_iterators(LinkedList *linkedlist){
+    if(linkedlist->HEAD){
 
-    free(ll->Iterator);
-    NODE **n = malloc(sizeof(NODE *) * ll->elements);
-    NODE *p = ll->HEAD;
+    free(linkedlist->Iterator);
+    NODE **array_of_nodes = malloc(sizeof(NODE *) * linkedlist->elements);
+    NODE *node = linkedlist->HEAD;
 
     int i;
-    for(i = 0; p; p = p->next) n[i++] = p;
-    ll->Iterator = n;
+    for(i = 0; node; node = node->next) array_of_nodes[i++] = node;
+    linkedlist->Iterator = array_of_nodes;
     }
 }
 
 
 
-void addNodePointer(LinkedList *linkedlist, NODE *np){
+void add_node_pointer(LinkedList *linkedlist, NODE *np){
     np->next = linkedlist->HEAD;
     linkedlist->HEAD = np;
     linkedlist->elements++;
 };
 
-NODE * getNodePointer(LinkedList *linkedlist, void *key)
+NODE * get_node_pointer(LinkedList *linkedlist, void *key)
 {
 
     NODE *current = linkedlist->HEAD;
@@ -49,7 +49,7 @@ int add_new_node(LinkedList *linkedlist, void *key, void *value){
 
 };
 
-void *getNode(LinkedList *linkedlist, void *node_to_search){
+void *get_node(LinkedList *linkedlist, void *node_to_search){
 
     NODE *current = linkedlist->HEAD;
     while(current && linkedlist->equals(current->key, node_to_search)) current = current->next;
@@ -60,7 +60,7 @@ void *getNode(LinkedList *linkedlist, void *node_to_search){
 };
 
 
-void *removeNode(LinkedList *linkedlist, char *s){
+void *remove_node(LinkedList *linkedlist, char *s){
 
     void *value_from_linkedlist;
     NODE *current = linkedlist->HEAD;

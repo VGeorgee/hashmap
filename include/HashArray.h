@@ -10,20 +10,20 @@ typedef struct map{
     int (* hashcode)(const void *a);
 }Map;
 
-typedef struct payload{
-    int (* equals)(const void *a, const void *b);
-    int (* hashcode)(const void *a);
-}Payload;
 
-Map * newMap();
-int getHash(char *);
-void put(Map *, char *, int);
-void putNode(Map *, NODE *);
-int get(Map *, char *);
-NODE *getPtr(Map *, char *);
-int Mremove(Map *, char *);
-int contains(Map *thism, char *s);
-int isEmpty(Map *);
-void reHash(Map *);
-double getLoadFactor(Map *);
-int genPrime(int );
+Map * new_map();
+
+//
+int getHash(void *);
+//
+
+void map_put(Map *this_map, void *key, void *value);
+void map_put_node(Map *this_map, NODE *);
+int map_get(Map *this_map, void *key);
+NODE *getPtr(Map *this_map, void *key);
+int map_remove(Map *this_map, void *key);
+int map_contains(Map *this_map, void *key);
+int map_isempty(Map *this_map);
+void rehash(Map *this_map);
+double get_load_factor(Map *this_map);
+int generate_prime(int );

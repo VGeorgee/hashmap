@@ -27,16 +27,16 @@ typedef struct linkedlist
 
 
 
-LinkedList * initLL();      // Initialize a LinkedList and returns its pointer
+LinkedList * new_linked_list();      // Initialize a LinkedList and returns its pointer
 
-void getIterators(LinkedList *);    //Allocates LinkedList's iterator array, and fills it with its pointers
+void get_iterators(LinkedList *);    //Allocates LinkedList's iterator array, and fills it with its pointers
 
-void *getNode(LinkedList *, char *);  //returns the value of the specified String, if not found, returns NULL
-int addNode(LinkedList *, char *,  int);    //adds a Node to the LinkedList in a <String int> pair
+void *get_node(LinkedList *, void *);  //returns the value of the specified String, if not found, returns NULL
+int add_node(LinkedList *, void *,  void *);    //adds a Node to the LinkedList in a <String int> pair
 
-NODE *getNodePointer(LinkedList *, char *);    //returns the pointer to the Node of the specified String, if not found, returns NULL
-void addNodePointer(LinkedList *, NODE *);      //adds a Node's pointer to the LinkedList
+NODE *get_node_pointer(LinkedList *, void *);    //returns the pointer to the Node of the specified String, if not found, returns NULL
+void add_node_pointer(LinkedList *, NODE *);      //adds a Node's pointer to the LinkedList
 
-void *removeNode(LinkedList *, char *);       //removes the specified Node from the LinkedList, returning its value, if not found, returns NULL;
+void *remove_node(LinkedList *, void *);       //removes the specified Node from the LinkedList, returning its value, if not found, returns NULL;
 
 

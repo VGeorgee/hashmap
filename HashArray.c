@@ -2,13 +2,15 @@
 #define NextNPrime 5
 #define MAXLOADFACTOR 0.75
 
-Map * newMap(int n, int (* eq)(const void *a, const void*b), int (* hash)(const void *a))
+Map * new_map(int n, int (* eq)(const void *a, const void*b), int (* hash)(const void *a))
 {
     int i;
     Map *new_map = malloc(sizeof(Map));
     new_map->harray = malloc(sizeof(LinkedList *) * n);
-    for(i = 0; i < n; i++)
+
+    for(i = 0; i < n; i++){
         new_map->harray[i] = initLL();
+    }
     new_map->tablesize = n;
     new_map->maxloadfactor = MAXLOADFACTOR;
     new_map->elements = 0;
@@ -31,98 +33,98 @@ int getHash(char *s)
 
 
 
-void put(Map *thism, char *s, int n)
+void map_put(Map *this_map, void *key, void *value)
 {
 
-    if(getLoadFactor(thism) >= thism->maxloadfactor)
-        reHash(thism);
+    if(getLoadFactor(this_map) >= this_map->maxloadfactor)
+        reHash(this_map);
 
-    int hash = getHash(s);
-    hash %= thism->tablesize;
-    add_new_node(thism->harray[hash], s, n);
-    thism->elements++;
+    int hash = this_map->hashcode(key);
+    hash %= this_map->tablesize;
+    add_new_node(this_map->harray[hash], key, value);
+    this_map->elements++;
 
 };
 
-void putNode(Map *thism, NODE *np){
+void map_put_node(Map *this_map, NODE *np){
 
 
-    if(getLoadFactor(thism) >= thism->maxloadfactor)
-        reHash(thism);
+    if(getLoadFactor(this_map) >= this_map->maxloadfactor)
+        reHash(this_map);
 
-    int hash = getHash(np->str);
-    hash %= thism->tablesize;
-    addNodePointer(thism->harray[hash], np);
-    thism->elements++;
+    int hash = this_map->hashcode(np->str);
+    hash %= this_map->tablesize;
+    addNodePointer(this_map->harray[hash], np);
+    this_map->elements++;
 }
 
 
 
-int get(Map *thism, char *s)
+int map_get(Map *this_map, char *s)
 {
-    return getNode(thism->harray[getHash(s) % thism->tablesize], s);
+    return getNode(this_map->harray[this_map->hashcode(s) % this_map->tablesize], s);
 };
 
-NODE *getPtr(Map *thism, char *s){
+NODE *getPtr(Map *this_map, char *s){
 
-    return getNodePointer(thism->harray[getHash(s) % thism->tablesize], s);
+    return getNodePointer(this_map->harray[this_map->hashcode(s) % this_map->tablesize], s);
 }
 
-int Mremove(Map *thism, char *s)
+int map_remove(Map *this_map, char *s)
 {
-    int ret = removeNode(thism->harray[getHash(s) % thism->tablesize], s);
+    int ret = removeNode(this_map->harray[this_map->hashcode(s) % this_map->tablesize], s);
     if(ret != -1)
-        thism->elements--;
+        this_map->elements--;
     return ret;
 }
 
-int contains(Map *thism, char *s)
+int map_contains(Map *this_map, char *s)
 {
-    return getNode(thism->harray[getHash(s) % thism->tablesize], s) == -1 ? 0 : 1;
+    return map_get_node(this_map->harray[this_map->hashcode(s) % this_map->tablesize], s) == -1 ? 0 : 1;
 };
 
-int isEmpty(Map *thism)
+int map_isempty(Map *this_map)
 {
-    return thism->elements == 0;
+    return this_map->elements == 0;
 };
 
 
-void reHash(Map *thism)
+void map_re_hash(Map *this_map)
 {
-    int i, nextprime = genPrime(thism->tablesize);
+    int i, nextprime = genPrime(this_map->tablesize);
 
     LinkedList **newLL = malloc(sizeof(LinkedList *) * nextprime);
 
     for(i = 0; i < nextprime; i++)
         newLL[i] = initLL();
 
-    for(i = 0; i < thism->tablesize; i++)
+    for(i = 0; i < this_map->tablesize; i++)
     {
-        NODE *f = thism->harray[i]->HEAD;
+        NODE *f = this_map->harray[i]->HEAD;
         while(f != NULL)
         {
-            addNodePointer(newLL[getHash(f->str) % nextprime], f);
+            addNodePointer(newLL[this_map->hashcode(f->str) % nextprime], f);
             NODE *elozo = f;
             f = f->next;
             elozo->next = NULL;
         }
-        free(thism->harray[i]);
+        free(this_map->harray[i]);
     }
 
-    thism->tablesize = nextprime;
-    thism->harray = newLL;
+    this_map->tablesize = nextprime;
+    this_map->harray = newLL;
 
 };
 
-double getLoadFactor(Map *thism)
+double  get_load_factor(Map *this_map)
 {
-    if(thism->elements)
-        return (double)thism->elements / thism->tablesize;
+    if(this_map->elements)
+        return (double)this_map->elements / this_map->tablesize;
 
     return 0.0;
 };
 
-int isPrime(int n)
+int is_prime(int n)
 {
     int i;
     for(i = 2; i <= n/2; i++)
@@ -133,12 +135,12 @@ int isPrime(int n)
     return 1;
 };
 
-int genPrime(int n)
+int generate_prime(int n)
 {
     int k = 0, np = n;
     while(k < NextNPrime)
     {
-        if(isPrime(++np))
+        if(is_prime(++np))
             k++;
     }
     return np;
