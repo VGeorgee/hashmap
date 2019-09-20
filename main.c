@@ -6,7 +6,7 @@ int main()
 {
     int i, j;
     Map *m = initMap(N);
-
+ 
 
 
 
