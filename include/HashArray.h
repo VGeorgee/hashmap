@@ -5,9 +5,17 @@ typedef struct map{
     int tablesize;
     int elements;
     double maxloadfactor;
+
+    int (* equals)(const void *a, const void *b);
+    int (* hashcode)(const void *a);
 }Map;
 
-Map * initMap();
+typedef struct payload{
+    int (* equals)(const void *a, const void *b);
+    int (* hashcode)(const void *a);
+}Payload;
+
+Map * newMap();
 int getHash(char *);
 void put(Map *, char *, int);
 void putNode(Map *, NODE *);

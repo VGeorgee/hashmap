@@ -23,67 +23,67 @@ void getIterators(LinkedList *ll){
 
 
 
-void addNodePointer(LinkedList *ll, NODE *np){
-    np->next = ll->HEAD;
-    ll->HEAD = np;
-    ll->elements++;
+void addNodePointer(LinkedList *linkedlist, NODE *np){
+    np->next = linkedlist->HEAD;
+    linkedlist->HEAD = np;
+    linkedlist->elements++;
 };
 
-NODE * getNodePointer(LinkedList *ll, char *s)
+NODE * getNodePointer(LinkedList *linkedlist, void *key)
 {
 
-    NODE *f = ll->HEAD;
-    while(f && strcmp(f->str, s)) f = f->next;
-    return f;
+    NODE *current = linkedlist->HEAD;
+    while(current && linkedlist->equals(current->str, key)) current = current->next;
+    return current;
 
 };
 
-int addNode(LinkedList *ll, char *s, int n){
+int add_new_node(LinkedList *linkedlist, void *key, void *value){
 
-    NODE *neww = malloc(sizeof(NODE));
-    neww->data = n;
-    neww->str = s;
-    neww->next = ll->HEAD;
-    ll->HEAD = neww;
-    return ll->elements++;
-
-};
-
-int getNode(LinkedList *ll, char *s){
-
-    NODE *f = ll->HEAD;
-    while(f && strcmp(f->str, s)) f = f->next;
-
-    if(f) return f->data;
-    return -1;
+    NODE *new_node = malloc(sizeof(NODE));
+    new_node->value = value;
+    new_node->str = key;
+    new_node->next = linkedlist->HEAD;
+    linkedlist->HEAD = new_node;
+    return linkedlist->elements++;
 
 };
 
+void *getNode(LinkedList *linkedlist, void *node_to_search){
 
-int removeNode(LinkedList *ll, char *s){
+    NODE *current = linkedlist->HEAD;
+    while(current && linkedlist->equals(current->key, node_to_search)) current = current->next;
 
-    int dt;
-    NODE *f = ll->HEAD;
+    if(current) return current->value;
+    return NULL;
+
+};
+
+
+void *removeNode(LinkedList *linkedlist, char *s){
+
+    void *value_from_linkedlist;
+    NODE *current = linkedlist->HEAD;
     NODE *elozo = NULL;
 
-    while(f && strcmp(f->str, s)) {
-            elozo = f;
-            f = f->next;
+    while(current && strcmp(current->str, s)) {
+            elozo = current;
+            current = current->next;
     }
 
-    if(f){
+    if(current){
 
-        dt = f->data;
-        ll->elements--;
+        value_from_linkedlist = current->value;
+        linkedlist->elements--;
 
-        if(elozo) elozo->next = f->next;
-        else ll->HEAD = f->next;
+        if(elozo) elozo->next = current->next;
+        else linkedlist->HEAD = current->next;
 
-        free(f);
-        return dt;
+        free(current);
+        return value_from_linkedlist;
     }
 
-    return -1;
+    return NULL;
 };
 
 

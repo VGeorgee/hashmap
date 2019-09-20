@@ -2,20 +2,24 @@
 #define NextNPrime 5
 #define MAXLOADFACTOR 0.75
 
-Map * initMap(int n)
+Map * newMap(int n, int (* eq)(const void *a, const void*b), int (* hash)(const void *a))
 {
     int i;
-    Map *newmap = malloc(sizeof(Map));
-    newmap->harray = malloc(sizeof(LinkedList *) * n);
+    Map *new_map = malloc(sizeof(Map));
+    new_map->harray = malloc(sizeof(LinkedList *) * n);
     for(i = 0; i < n; i++)
-        newmap->harray[i] = initLL();
-    newmap->tablesize = n;
-    newmap->maxloadfactor = MAXLOADFACTOR;
-    newmap->elements = 0;
+        new_map->harray[i] = initLL();
+    new_map->tablesize = n;
+    new_map->maxloadfactor = MAXLOADFACTOR;
+    new_map->elements = 0;
 
-    return newmap;
+    new_map->equals = eq;
+    new_map->hashcode = hash;
+    
+    return new_map;
 };
 
+///
 int getHash(char *s)
 {
     int i = 0, hash = 0, g = 31;
@@ -23,6 +27,9 @@ int getHash(char *s)
 
     return hash & 0x7fffffff;
 };
+///
+
+
 
 void put(Map *thism, char *s, int n)
 {
@@ -32,7 +39,7 @@ void put(Map *thism, char *s, int n)
 
     int hash = getHash(s);
     hash %= thism->tablesize;
-    addNode(thism->harray[hash], s, n);
+    add_new_node(thism->harray[hash], s, n);
     thism->elements++;
 
 };
