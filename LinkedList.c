@@ -56,7 +56,7 @@ void *get_node(LinkedList *linkedlist, void *node_to_search){
 
     if(current) return current->value;
     return NULL;
-
+ 
 };
 
 
