@@ -1,5 +1,5 @@
 #include "include/HashArray.h"
-#define N 1
+#define N 100
 // initial Map size
 
 
@@ -18,17 +18,26 @@ int stringequals(const void *a, const void *b){
 int main()
 {
     int i, j;
-    Map *m = new_map(N, &stringequals, &hashforstring);
+    Map *m = new_map(N, stringequals, hashforstring);
 
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
     puts("HENLO");
     //
-    NODE n1 = {value: 100, key: "HELLO WORLD", NULL};
-    NODE n2 = {value:200, key: "HELLO WORLD2", NULL};
+    int valuenumber = 200;
+    char *mykey = "ASDASDASD";
 
-    map_put_node(m, &n1);
+    NODE *n1 = create_new_node("HENLO", &valuenumber);
+    NODE *n2 = create_new_node("masiksztring", &valuenumber);
+
+    map_put_node(m, n1);
+
+    printf("MAP PUT 1 DONE\n");
+
+    map_put_node(m, n2);
+
+    printf("MAP PUT 2 DONE\n");
+
     return 0;
-    map_put_node(m, &n2);
     printf("%d %s\n", map_get_node(m, "HELLO WORLD")->value, "HELLO WORLD");
     printf("%d %s\n", map_get_node(m, "HELLO WORLD2")->value, "HELLO WORLD2");
     //

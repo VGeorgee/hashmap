@@ -1,11 +1,13 @@
 #include "include/LinkedList.h"
 
-LinkedList *new_linked_list(){
-    LinkedList *nn = malloc(sizeof(LinkedList));
-    nn->elements = 0;
-    nn->HEAD = NULL;
-    nn->Iterator = NULL;
-    return nn;
+LinkedList *new_linked_list(int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a)){
+    LinkedList *linked_list = malloc(sizeof(LinkedList));
+    linked_list->elements = 0;
+    linked_list->HEAD = NULL;
+    linked_list->Iterator = NULL;
+    linked_list->equals = equals;
+    linked_list->hashcode = hashcode;
+    return linked_list;
 };
 
 void get_iterators(LinkedList *linkedlist){

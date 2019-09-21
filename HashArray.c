@@ -2,21 +2,21 @@
 #define NextNPrime 5
 #define MAXLOADFACTOR 0.75
 
-Map * new_map(int n, int (* eq)(const void *a, const void*b), int (* hash)(const void *a))
+Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a))
 {
     int i;
     Map *new_map = malloc(sizeof(Map));
     new_map->harray = malloc(sizeof(LinkedList *) * n);
 
     for(i = 0; i < n; i++){
-        new_map->harray[i] = new_linked_list();
+        new_map->harray[i] = new_linked_list(equals, hashcode);
     }
     new_map->tablesize = n;
     new_map->maxloadfactor = MAXLOADFACTOR;
     new_map->elements = 0;
 
-    new_map->equals = eq;
-    new_map->hashcode = hash;
+    new_map->equals = equals;
+    new_map->hashcode = hashcode;
 
     return new_map;
 };
@@ -46,20 +46,34 @@ void map_put(Map *this_map, void *key, void *value)
     if(get_load_factor(this_map) >= this_map->maxloadfactor)
         rehash(this_map);
 
+    puts("DEBUG REHASH DONE");
     int hash = this_map->hashcode(key);
+
+    puts("DEBUG HASHCODE GENERATED");
     hash %= this_map->tablesize;
+
     add_new_node(this_map->harray[hash], key, value);
+    puts("DEBUG NODE ADDED");
+
     this_map->elements++;
 
 };
 
-void map_put_node(Map *this_map, NODE *np){
+void map_put_node(Map *this_map, NODE *node_pointer){
+
     if(get_load_factor(this_map) >= this_map->maxloadfactor)
         rehash(this_map);
 
-    int hash = this_map->hashcode(np->key);
+    puts("DEBUG REHASH DONE");
+
+    printf("\nDEBUG DATA::::  |%p %s \n", this_map->hashcode, node_pointer->key);
+    int hash = this_map->hashcode(node_pointer->key);
+
+    puts("DEBUG HASHCODE GENERATED");
     hash %= this_map->tablesize;
-    add_node_pointer(this_map->harray[hash], np);
+    add_node_pointer(this_map->harray[hash], node_pointer);
+
+    puts("DEBUG NODE ADDED");
     this_map->elements++;
 }
 
