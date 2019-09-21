@@ -21,19 +21,6 @@ Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcod
     return new_map;
 };
 
-///
-/*
-int getHash(char *s)
-{
-    int i = 0, hash = 0, g = 31;
-    while(s[i]) hash = g * hash + s[i++];
-
-    return hash & 0x7fffffff;
-};
-*/
-///
-
-
 /**
  *
  * make call to map_put_node by creating node from arguments
@@ -46,14 +33,11 @@ void map_put(Map *this_map, void *key, void *value)
     if(get_load_factor(this_map) >= this_map->maxloadfactor)
         rehash(this_map);
 
-    puts("DEBUG REHASH DONE");
     int hash = this_map->hashcode(key);
 
-    puts("DEBUG HASHCODE GENERATED");
     hash %= this_map->tablesize;
 
     add_new_node(this_map->harray[hash], key, value);
-    puts("DEBUG NODE ADDED");
 
     this_map->elements++;
 
@@ -64,16 +48,11 @@ void map_put_node(Map *this_map, NODE *node_pointer){
     if(get_load_factor(this_map) >= this_map->maxloadfactor)
         rehash(this_map);
 
-    puts("DEBUG REHASH DONE");
-
-    printf("\nDEBUG DATA::::  |%p %s \n", this_map->hashcode, node_pointer->key);
     int hash = this_map->hashcode(node_pointer->key);
 
-    puts("DEBUG HASHCODE GENERATED");
     hash %= this_map->tablesize;
     add_node_pointer(this_map->harray[hash], node_pointer);
 
-    puts("DEBUG NODE ADDED");
     this_map->elements++;
 }
 
@@ -83,14 +62,16 @@ void *map_get(Map *this_map, void *key){
 
 NODE *map_get_node(Map *this_map, void *key){
     return get_node_pointer(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key);
-}
+};
 
-int map_remove(Map *this_map, void *key){
+void *map_remove(Map *this_map, void *key){
     void *removed_element = remove_node(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key);
-    if(removed_element != -1)
+
+    if(removed_element != NULL)
         this_map->elements--;
+
     return removed_element;
-}
+};
 
 int map_contains(Map *this_map, void *key){
     return map_get_node(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key) == -1 ? 0 : 1;
@@ -128,11 +109,22 @@ void rehash(Map *this_map){
 };
 
 double  get_load_factor(Map *this_map){
-    if(this_map->elements)
+    if(this_map->elements > 0)
         return (double)this_map->elements / this_map->tablesize;
 
     return 0.0;
 };
+
+void print_all_nodes(Map *this_map){
+    for(int i = 0; i < this_map->tablesize; i++){
+        if(this_map->harray[i]){
+            get_iterators(this_map->harray[i]);
+            NODE **t = this_map->harray[i]->Iterator;
+            for(int j = 0; j < this_map->harray[i]->elements; j++)
+                printf("%15s %8d %2d\n", t[j]->key, t[j]->value, j);
+        }
+    }
+}
 
 int is_prime(int n){
     int i;

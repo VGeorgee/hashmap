@@ -31,18 +31,30 @@ void add_node_pointer(LinkedList *linkedlist, NODE *np){
     linkedlist->elements++;
 };
 
-NODE *get_node_pointer(LinkedList *linkedlist, void *key){
-    NODE *current = linkedlist->HEAD;
-    while(current && linkedlist->equals(current->key, key)) current = current->next;
-    return current;
-};
-
 NODE *create_new_node(void *key, void *value){
     NODE *new_node = malloc(sizeof(NODE));
     new_node->value = value;
     new_node->key = key;
     return new_node;
 }
+
+NODE *get_node_pointer(LinkedList *linkedlist, void *key){
+
+    if(linkedlist->HEAD == NULL){
+        return NULL;
+    }
+
+    NODE *current = linkedlist->HEAD;
+
+    while(current){
+        if(linkedlist->equals(current->key, key)) {
+            break;
+        }
+        else current = current->next;
+    }
+    return current;
+};
+
 
 int add_new_node(LinkedList *linkedlist, void *key, void *value){
 
@@ -58,7 +70,13 @@ int add_new_node(LinkedList *linkedlist, void *key, void *value){
 void *get_node(LinkedList *linkedlist, void *node_to_search){
 
     NODE *current = linkedlist->HEAD;
-    while(current && linkedlist->equals(current->key, node_to_search)) current = current->next;
+
+    while(current){
+        if(linkedlist->equals(current->key, node_to_search)){
+            break;
+        }
+        current = current->next;
+    }
 
     if(current) return current->value;
     return NULL;
@@ -72,9 +90,12 @@ void *remove_node(LinkedList *linkedlist, void *key){
     NODE *current = linkedlist->HEAD;
     NODE *elozo = NULL;
 
-    while(current && linkedlist->equals(current->key, key)) {
-            elozo = current;
-            current = current->next;
+    while(current) {
+        if(linkedlist->equals(current->key, key)){
+            break;
+        }
+        elozo = current;
+        current = current->next;
     }
 
     if(current){
