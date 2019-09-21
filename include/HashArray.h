@@ -5,17 +5,23 @@ typedef struct map{
     int tablesize;
     int elements;
     double maxloadfactor;
+
+    int (* equals)(const void *a, const void *b);
+    int (* hashcode)(const void *a);
 }Map;
 
-Map * initMap();
-int getHash(char *);
-void put(Map *, char *, int);
-void putNode(Map *, NODE *);
-int get(Map *, char *);
-NODE *getPtr(Map *, char *);
-int Mremove(Map *, char *);
-int contains(Map *thism, char *s);
-int isEmpty(Map *);
-void reHash(Map *);
-double getLoadFactor(Map *);
-int genPrime(int );
+
+Map * new_map();
+
+
+void map_put(Map *this_map, void *key, void *value);
+void map_put_node(Map *this_map, NODE *);
+void *map_get(Map *this_map, void *key);
+NODE *map_get_node(Map *this_map, void *key);
+void *map_remove(Map *this_map, void *key);
+int map_contains(Map *this_map, void *key);
+int map_isempty(Map *this_map);
+void rehash(Map *this_map);
+double get_load_factor(Map *this_map);
+void print_all_nodes(Map *this_map);
+int generate_prime(int );

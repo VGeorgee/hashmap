@@ -1,89 +1,121 @@
-#include "LinkedList.h"
+#include "include/LinkedList.h"
 
-LinkedList *initLL(){
-    LinkedList *nn = malloc(sizeof(LinkedList));
-    nn->elements = 0;
-    nn->HEAD = NULL;
-    nn->Iterator = NULL;
-    return nn;
+LinkedList *new_linked_list(int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a)){
+    LinkedList *linked_list = malloc(sizeof(LinkedList));
+    linked_list->elements = 0;
+    linked_list->HEAD = NULL;
+    linked_list->Iterator = NULL;
+    linked_list->equals = equals;
+    linked_list->hashcode = hashcode;
+    return linked_list;
 };
 
-void getIterators(LinkedList *ll){
-    if(ll->HEAD){
+void get_iterators(LinkedList *linkedlist){
 
-    free(ll->Iterator);
-    NODE **n = malloc(sizeof(NODE *) * ll->elements);
-    NODE *p = ll->HEAD;
+    if(linkedlist->HEAD){
+        free(linkedlist->Iterator);
+        NODE **array_of_nodes = malloc(sizeof(NODE *) * linkedlist->elements);
+        NODE *node = linkedlist->HEAD;
 
-    int i;
-    for(i = 0; p; p = p->next) n[i++] = p;
-    ll->Iterator = n;
+        int i;
+        for(i = 0; node; node = node->next){
+            array_of_nodes[i++] = node;
+        }
+        linkedlist->Iterator = array_of_nodes;
     }
 }
 
-
-
-void addNodePointer(LinkedList *ll, NODE *np){
-    np->next = ll->HEAD;
-    ll->HEAD = np;
-    ll->elements++;
+void add_node_pointer(LinkedList *linkedlist, NODE *np){
+    np->next = linkedlist->HEAD;
+    linkedlist->HEAD = np;
+    linkedlist->elements++;
 };
 
-NODE * getNodePointer(LinkedList *ll, char *s)
-{
+NODE *create_new_node(void *key, void *value){
+    NODE *new_node = malloc(sizeof(NODE));
+    new_node->value = value;
+    new_node->key = key;
+    return new_node;
+}
 
-    NODE *f = ll->HEAD;
-    while(f && strcmp(f->str, s)) f = f->next;
-    return f;
+NODE *get_node_pointer(LinkedList *linkedlist, void *key){
 
-};
+    if(linkedlist->HEAD == NULL){
+        return NULL;
+    }
 
-int addNode(LinkedList *ll, char *s, int n){
+    NODE *current = linkedlist->HEAD;
 
-    NODE *neww = malloc(sizeof(NODE));
-    neww->data = n;
-    neww->str = s;
-    neww->next = ll->HEAD;
-    ll->HEAD = neww;
-    return ll->elements++;
-
-};
-
-int getNode(LinkedList *ll, char *s){
-
-    NODE *f = ll->HEAD;
-    while(f && strcmp(f->str, s)) f = f->next;
-
-    if(f) return f->data;
-    return -1;
-
+    while(current){
+        if(linkedlist->equals(current->key, key)) {
+            break;
+        }
+        else current = current->next;
+    }
+    return current;
 };
 
 
-int removeNode(LinkedList *ll, char *s){
+int add_new_node(LinkedList *linkedlist, void *key, void *value){
 
-    int dt;
-    NODE *f = ll->HEAD;
+    NODE *new_node = malloc(sizeof(NODE));
+    new_node->value = value;
+    new_node->key = key;
+    new_node->next = linkedlist->HEAD;
+    linkedlist->HEAD = new_node;
+    return linkedlist->elements++;
+
+};
+
+void *get_node(LinkedList *linkedlist, void *node_to_search){
+
+    NODE *current = linkedlist->HEAD;
+
+    while(current){
+        if(linkedlist->equals(current->key, node_to_search)){
+            break;
+        }
+        current = current->next;
+    }
+
+    if(current) return current->value;
+    return NULL;
+
+};
+
+
+void *remove_node(LinkedList *linkedlist, void *key){
+
+    void *value_from_linkedlist;
+    NODE *current = linkedlist->HEAD;
     NODE *elozo = NULL;
 
-    while(f && strcmp(f->str, s)) {
-            elozo = f;
-            f = f->next;
+    while(current) {
+        if(linkedlist->equals(current->key, key)){
+            break;
+        }
+        elozo = current;
+        current = current->next;
     }
 
-    if(f){
+    if(current){
 
-        dt = f->data;
-        ll->elements--;
+        value_from_linkedlist = current->value;
+        linkedlist->elements--;
 
-        if(elozo) elozo->next = f->next;
-        else ll->HEAD = f->next;
+        if(elozo){
+            elozo->next = current->next;
+        }
+        else{
+            linkedlist->HEAD = current->next;
+        }
 
-        free(f);
-        return dt;
+        free(current);
+
+        return value_from_linkedlist;
     }
 
-    return -1;
+    return NULL;
 };
 
 
