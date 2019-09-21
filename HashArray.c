@@ -4,6 +4,9 @@
 
 Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a))
 {
+    if(n == 0){
+        n = 1;
+    }
     int i;
     Map *new_map = malloc(sizeof(Map));
     new_map->harray = malloc(sizeof(LinkedList *) * n);
@@ -87,25 +90,26 @@ void rehash(Map *this_map){
 
     LinkedList **newLL = malloc(sizeof(LinkedList *) *nextprime);
 
-    for(i = 0; i < nextprime; i++)
-        newLL[i] = new_linked_list();
+    for(i = 0; i < nextprime; i++){
+        newLL[i] = new_linked_list(this_map->equals, this_map->hashcode);
+    }
 
     for(i = 0; i < this_map->tablesize; i++)
     {
-        NODE *f = this_map->harray[i]->HEAD;
-        while(f != NULL)
-        {
-            map_put_node(newLL[this_map->hashcode(f->key) % nextprime], f);
-            NODE *elozo = f;
-            f = f->next;
-            elozo->next = NULL;
+        NODE *node = this_map->harray[i]->HEAD;
+        if(node){
+            while(node != NULL)
+            {
+                add_node_pointer(newLL[this_map->hashcode(node->key) % nextprime], node);
+                NODE *elozo = node;
+                node = node->next;
+                elozo->next = NULL;
+            }
+            free(this_map->harray[i]);
         }
-        free(this_map->harray[i]);
     }
-
     this_map->tablesize = nextprime;
     this_map->harray = newLL;
-
 };
 
 double  get_load_factor(Map *this_map){

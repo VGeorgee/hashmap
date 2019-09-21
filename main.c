@@ -1,5 +1,5 @@
 #include "include/HashArray.h"
-#define N 100
+#define N 1
 // initial Map size
 
 
@@ -29,7 +29,6 @@ int main()
     NODE *n2 = create_new_node("anotherstring", &valuenumber);
 
     map_put_node(m, n1);
-
     map_put_node(m, n2);
 
     NODE *found = map_get_node(m, n1->key);
@@ -41,9 +40,6 @@ int main()
     if(found)
         printf("%d %s\n", *(int *) found->value, "HELLO WORLD2");
 
-    //
-
-    //
     map_put(m, "Hello", 300);
     map_put(m, "World", 400);
     map_put(m, "iremovethis", 80000);
@@ -52,7 +48,6 @@ int main()
 
     printf("%d %s\n", map_get(m, "World"), "World");
     printf("%d %s\n", map_get(m, "iremovethis"), "iremovethis");
-    //
 
     void *removed = map_remove(m, "This is not in the map");
     printf("removed: %p\n", removed);
@@ -60,7 +55,6 @@ int main()
     printf("removed: %d\n", removed);
 
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
-
 
     puts("Elements in map:");
     print_all_nodes(m);
