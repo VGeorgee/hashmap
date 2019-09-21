@@ -9,7 +9,7 @@ Map * new_map(int n, int (* eq)(const void *a, const void*b), int (* hash)(const
     new_map->harray = malloc(sizeof(LinkedList *) * n);
 
     for(i = 0; i < n; i++){
-        new_map->harray[i] = initLL();
+        new_map->harray[i] = new_linked_list();
     }
     new_map->tablesize = n;
     new_map->maxloadfactor = MAXLOADFACTOR;
@@ -32,6 +32,11 @@ int getHash(char *s)
 ///
 
 
+/**
+ * 
+ * make call to map_put_node by creating node from arguments
+ * 
+ * */
 
 void map_put(Map *this_map, void *key, void *value)
 {
@@ -47,53 +52,43 @@ void map_put(Map *this_map, void *key, void *value)
 };
 
 void map_put_node(Map *this_map, NODE *np){
-
-
     if(getLoadFactor(this_map) >= this_map->maxloadfactor)
         reHash(this_map);
 
     int hash = this_map->hashcode(np->str);
     hash %= this_map->tablesize;
-    addNodePointer(this_map->harray[hash], np);
+    add_node_pointer(this_map->harray[hash], np);
     this_map->elements++;
 }
 
-
-
-int map_get(Map *this_map, char *s)
-{
-    return getNode(this_map->harray[this_map->hashcode(s) % this_map->tablesize], s);
+void *map_get(Map *this_map, void *key){
+    return get_node(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key);
 };
 
-NODE *getPtr(Map *this_map, char *s){
-
-    return getNodePointer(this_map->harray[this_map->hashcode(s) % this_map->tablesize], s);
+NODE *map_get_node(Map *this_map, void *key){
+    return get_node_pointer(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key);
 }
 
-int map_remove(Map *this_map, char *s)
-{
-    int ret = removeNode(this_map->harray[this_map->hashcode(s) % this_map->tablesize], s);
-    if(ret != -1)
+int map_remove(Map *this_map, void *key){
+    void *removed_element = remove_node(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key);
+    if(removed_element != -1)
         this_map->elements--;
-    return ret;
+    return removed_element;
 }
 
-int map_contains(Map *this_map, char *s)
-{
-    return map_get_node(this_map->harray[this_map->hashcode(s) % this_map->tablesize], s) == -1 ? 0 : 1;
+int map_contains(Map *this_map, void *key){
+    return map_get_node(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key) == -1 ? 0 : 1;
 };
 
-int map_isempty(Map *this_map)
-{
+int map_isempty(Map *this_map){
     return this_map->elements == 0;
 };
 
 
-void map_re_hash(Map *this_map)
-{
+void map_re_hash(Map *this_map){
     int i, nextprime = genPrime(this_map->tablesize);
 
-    LinkedList **newLL = malloc(sizeof(LinkedList *) * nextprime);
+    LinkedList **newLL = malloc(sizeof(LinkedList *) *nextprime);
 
     for(i = 0; i < nextprime; i++)
         newLL[i] = initLL();
@@ -116,16 +111,14 @@ void map_re_hash(Map *this_map)
 
 };
 
-double  get_load_factor(Map *this_map)
-{
+double  get_load_factor(Map *this_map){
     if(this_map->elements)
         return (double)this_map->elements / this_map->tablesize;
 
     return 0.0;
 };
 
-int is_prime(int n)
-{
+int is_prime(int n){
     int i;
     for(i = 2; i <= n/2; i++)
     {
@@ -135,8 +128,7 @@ int is_prime(int n)
     return 1;
 };
 
-int generate_prime(int n)
-{
+int generate_prime(int n){
     int k = 0, np = n;
     while(k < NextNPrime)
     {

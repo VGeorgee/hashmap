@@ -9,19 +9,19 @@ LinkedList *new_linked_list(){
 };
 
 void get_iterators(LinkedList *linkedlist){
+
     if(linkedlist->HEAD){
+        free(linkedlist->Iterator);
+        NODE **array_of_nodes = malloc(sizeof(NODE *) * linkedlist->elements);
+        NODE *node = linkedlist->HEAD;
 
-    free(linkedlist->Iterator);
-    NODE **array_of_nodes = malloc(sizeof(NODE *) * linkedlist->elements);
-    NODE *node = linkedlist->HEAD;
-
-    int i;
-    for(i = 0; node; node = node->next) array_of_nodes[i++] = node;
-    linkedlist->Iterator = array_of_nodes;
+        int i;
+        for(i = 0; node; node = node->next){
+            array_of_nodes[i++] = node;
+        }
+        linkedlist->Iterator = array_of_nodes;
     }
 }
-
-
 
 void add_node_pointer(LinkedList *linkedlist, NODE *np){
     np->next = linkedlist->HEAD;
@@ -29,14 +29,18 @@ void add_node_pointer(LinkedList *linkedlist, NODE *np){
     linkedlist->elements++;
 };
 
-NODE * get_node_pointer(LinkedList *linkedlist, void *key)
-{
-
+NODE *get_node_pointer(LinkedList *linkedlist, void *key){
     NODE *current = linkedlist->HEAD;
     while(current && linkedlist->equals(current->str, key)) current = current->next;
     return current;
-
 };
+
+NODE *create_new_node(void *key, void *value){
+    NODE *new_node = malloc(sizeof(NODE));
+    new_node->value = value;
+    new_node->str = key;
+    return new_node;
+}
 
 int add_new_node(LinkedList *linkedlist, void *key, void *value){
 

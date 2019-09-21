@@ -19,8 +19,8 @@ int getHash(void *);
 
 void map_put(Map *this_map, void *key, void *value);
 void map_put_node(Map *this_map, NODE *);
-int map_get(Map *this_map, void *key);
-NODE *getPtr(Map *this_map, void *key);
+void *map_get(Map *this_map, void *key);
+NODE *map_get_node(Map *this_map, void *key);
 int map_remove(Map *this_map, void *key);
 int map_contains(Map *this_map, void *key);
 int map_isempty(Map *this_map);
