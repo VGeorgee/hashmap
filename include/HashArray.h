@@ -13,9 +13,6 @@ typedef struct map{
 
 Map * new_map();
 
-//
-int getHash(void *);
-//
 
 void map_put(Map *this_map, void *key, void *value);
 void map_put_node(Map *this_map, NODE *);

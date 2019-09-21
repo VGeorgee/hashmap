@@ -8,9 +8,12 @@ typedef struct node
     void *value;
 
 //
+/*
     char *str;
     int data;
 //
+
+*/
 
     struct node *next;
 } NODE;
@@ -20,7 +23,7 @@ typedef struct linkedlist
     NODE *HEAD;
     NODE **Iterator;
     int elements;
-    
+
     int (* equals)(const void *a, const void *b);
     int (* hashcode)(const void *a);
 } LinkedList;

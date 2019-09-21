@@ -1,4 +1,4 @@
-#include "HashArray.h"
+#include "include/HashArray.h"
 #define NextNPrime 5
 #define MAXLOADFACTOR 0.75
 
@@ -17,11 +17,12 @@ Map * new_map(int n, int (* eq)(const void *a, const void*b), int (* hash)(const
 
     new_map->equals = eq;
     new_map->hashcode = hash;
-    
+
     return new_map;
 };
 
 ///
+/*
 int getHash(char *s)
 {
     int i = 0, hash = 0, g = 31;
@@ -29,20 +30,21 @@ int getHash(char *s)
 
     return hash & 0x7fffffff;
 };
+*/
 ///
 
 
 /**
- * 
+ *
  * make call to map_put_node by creating node from arguments
- * 
+ *
  * */
 
 void map_put(Map *this_map, void *key, void *value)
 {
 
-    if(getLoadFactor(this_map) >= this_map->maxloadfactor)
-        reHash(this_map);
+    if(get_load_factor(this_map) >= this_map->maxloadfactor)
+        rehash(this_map);
 
     int hash = this_map->hashcode(key);
     hash %= this_map->tablesize;
@@ -52,10 +54,10 @@ void map_put(Map *this_map, void *key, void *value)
 };
 
 void map_put_node(Map *this_map, NODE *np){
-    if(getLoadFactor(this_map) >= this_map->maxloadfactor)
-        reHash(this_map);
+    if(get_load_factor(this_map) >= this_map->maxloadfactor)
+        rehash(this_map);
 
-    int hash = this_map->hashcode(np->str);
+    int hash = this_map->hashcode(np->key);
     hash %= this_map->tablesize;
     add_node_pointer(this_map->harray[hash], np);
     this_map->elements++;
@@ -85,20 +87,20 @@ int map_isempty(Map *this_map){
 };
 
 
-void map_re_hash(Map *this_map){
-    int i, nextprime = genPrime(this_map->tablesize);
+void rehash(Map *this_map){
+    int i, nextprime = generate_prime(this_map->tablesize);
 
     LinkedList **newLL = malloc(sizeof(LinkedList *) *nextprime);
 
     for(i = 0; i < nextprime; i++)
-        newLL[i] = initLL();
+        newLL[i] = new_linked_list();
 
     for(i = 0; i < this_map->tablesize; i++)
     {
         NODE *f = this_map->harray[i]->HEAD;
         while(f != NULL)
         {
-            addNodePointer(newLL[this_map->hashcode(f->str) % nextprime], f);
+            map_put_node(newLL[this_map->hashcode(f->key) % nextprime], f);
             NODE *elozo = f;
             f = f->next;
             elozo->next = NULL;

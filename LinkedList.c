@@ -1,4 +1,4 @@
-#include "LinkedList.h"
+#include "include/LinkedList.h"
 
 LinkedList *new_linked_list(){
     LinkedList *nn = malloc(sizeof(LinkedList));
@@ -31,14 +31,14 @@ void add_node_pointer(LinkedList *linkedlist, NODE *np){
 
 NODE *get_node_pointer(LinkedList *linkedlist, void *key){
     NODE *current = linkedlist->HEAD;
-    while(current && linkedlist->equals(current->str, key)) current = current->next;
+    while(current && linkedlist->equals(current->key, key)) current = current->next;
     return current;
 };
 
 NODE *create_new_node(void *key, void *value){
     NODE *new_node = malloc(sizeof(NODE));
     new_node->value = value;
-    new_node->str = key;
+    new_node->key = key;
     return new_node;
 }
 
@@ -46,7 +46,7 @@ int add_new_node(LinkedList *linkedlist, void *key, void *value){
 
     NODE *new_node = malloc(sizeof(NODE));
     new_node->value = value;
-    new_node->str = key;
+    new_node->key = key;
     new_node->next = linkedlist->HEAD;
     linkedlist->HEAD = new_node;
     return linkedlist->elements++;
@@ -60,7 +60,7 @@ void *get_node(LinkedList *linkedlist, void *node_to_search){
 
     if(current) return current->value;
     return NULL;
-  
+
 };
 
 
@@ -70,7 +70,7 @@ void *remove_node(LinkedList *linkedlist, void *key){
     NODE *current = linkedlist->HEAD;
     NODE *elozo = NULL;
 
-    while(current && linkedlist->equals(current->str, key)) {
+    while(current && linkedlist->equals(current->key, key)) {
             elozo = current;
             current = current->next;
     }
@@ -80,10 +80,15 @@ void *remove_node(LinkedList *linkedlist, void *key){
         value_from_linkedlist = current->value;
         linkedlist->elements--;
 
-        if(elozo) elozo->next = current->next;
-        else linkedlist->HEAD = current->next;
+        if(elozo){
+            elozo->next = current->next;
+        }
+        else{
+            linkedlist->HEAD = current->next;
+        }
 
         free(current);
+
         return value_from_linkedlist;
     }
 
