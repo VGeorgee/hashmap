@@ -106,6 +106,7 @@ void rehash(Map *this_map){
                 elozo->next = NULL;
             }
             free(this_map->harray[i]);
+            this_map->harray[i] = NULL;
         }
     }
     this_map->tablesize = nextprime;
