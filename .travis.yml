@@ -1,6 +1,10 @@
 language: C
-compiler: gcc
+compiler: clang
 
 script:
-  - gcc main.c HashArray.c LinkedList.c -o main
+  - clang -coverage -O0 main.c HashArray.c LinkedList.c -o main
   - ./main
+  - gcov main.c
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
