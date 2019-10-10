@@ -1,2 +1,6 @@
 language: C
 compiler: gcc
+
+build:
+  - gcc main.c HashArray.c LinkedList.c -o main
+  - ./main
