@@ -1,5 +1,5 @@
 language: C
-compiler: clang
+compiler: clang 4.0
 
 script:
   - clang -coverage -O0 main.c HashArray.c LinkedList.c -o main
