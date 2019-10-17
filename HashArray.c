@@ -86,11 +86,11 @@ int map_isempty(Map *this_map){
 
 
 void rehash(Map *this_map){
-    int i, nextprime = generate_prime(this_map->tablesize);
+    int i, next_size = generate_prime(this_map->tablesize);
 
-    LinkedList **newLL = malloc(sizeof(LinkedList *) *nextprime);
+    LinkedList **newLL = malloc(sizeof(LinkedList *) *next_size);
 
-    for(i = 0; i < nextprime; i++){
+    for(i = 0; i < next_size; i++){
         newLL[i] = new_linked_list(this_map->equals, this_map->hashcode);
     }
 
@@ -100,7 +100,7 @@ void rehash(Map *this_map){
         if(node){
             while(node != NULL)
             {
-                add_node_pointer(newLL[this_map->hashcode(node->key) % nextprime], node);
+                add_node_pointer(newLL[this_map->hashcode(node->key) % next_size], node);
                 NODE *elozo = node;
                 node = node->next;
                 elozo->next = NULL;
@@ -109,7 +109,7 @@ void rehash(Map *this_map){
             this_map->harray[i] = NULL;
         }
     }
-    this_map->tablesize = nextprime;
+    this_map->tablesize = next_size;
     this_map->harray = newLL;
 };
 
