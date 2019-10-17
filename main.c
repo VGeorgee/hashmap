@@ -1,7 +1,5 @@
 #include "include/HashArray.h"
 #define N 1
-// initial Map size
-
 
 int hashforstring(char *s){
     int i = 0, hash = 0, g = 31;
@@ -14,10 +12,19 @@ int stringequals(const void *a, const void *b){
     return strcmp(a, b) == 0;
 }
 
+int hashforintegers(int *n){
+    return (*n) &0x7fffffff;
+}
+
+int integerequals(const void *a, const void *b){
+
+    return (*(int *)a) == (*(int *)b);
+}
 
 int main()
 {
     int i, j;
+
     Map *m = new_map(N, stringequals, hashforstring); // passing equals and hashcode functions for the specified data type (string in this case)
 
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
@@ -49,14 +56,26 @@ int main()
     printf("%d %s\n", (int)map_get(m, "iremovethis"), "iremovethis");
 
     void *removed = map_remove(m, "This is not in the map");
-    printf("removed: %p\n", (int)removed);
+    printf("removed: %p\n", removed);
     removed = map_remove(m, "iremovethis");
     printf("removed: %d\n", (int)removed);
 
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
 
     puts("Elements in map:");
-    print_all_nodes(m);
+    print_all_nodes(m, "%15s %8d %2d\n");
+
+
+    Map *forintegers = new_map(2, integerequals, hashforintegers);
+    for(i = 0; i < 30000; i++){
+        int *p = malloc(sizeof(int));
+        *p = i;
+        map_put(forintegers, p, 250 + i);
+    }
+
+    puts("Elements in integermap:");
+    print_all_nodes(forintegers, "%4d %8d %2d\n");
+
 
     return 0;
 }

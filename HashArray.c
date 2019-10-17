@@ -4,8 +4,8 @@
 
 Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a))
 {
-    if(n == 0){
-        n = 10;
+    if(n <= 0){
+        n = 1;
     }
     int i;
     Map *new_map = malloc(sizeof(Map));
@@ -24,27 +24,15 @@ Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcod
     return new_map;
 };
 
-/**
- *
- * make call to map_put_node by creating node from arguments
- *
- * */
 
 void map_put(Map *this_map, void *key, void *value)
 {
 
-    if(get_load_factor(this_map) >= this_map->maxloadfactor)
-        rehash(this_map);
-
-    int hash = this_map->hashcode(key);
-
-    hash %= this_map->tablesize;
-
-    add_new_node(this_map->harray[hash], key, value);
-
-    this_map->elements++;
+    NODE *new_node = create_new_node(key, value);
+    map_put_node(this_map, new_node);
 
 };
+
 
 void map_put_node(Map *this_map, NODE *node_pointer){
 
@@ -57,15 +45,18 @@ void map_put_node(Map *this_map, NODE *node_pointer){
     add_node_pointer(this_map->harray[hash], node_pointer);
 
     this_map->elements++;
-}
+};
+
 
 void *map_get(Map *this_map, void *key){
     return get_node(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key);
 };
 
+
 NODE *map_get_node(Map *this_map, void *key){
     return get_node_pointer(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key);
 };
+
 
 void *map_remove(Map *this_map, void *key){
     void *removed_element = remove_node(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key);
@@ -76,9 +67,11 @@ void *map_remove(Map *this_map, void *key){
     return removed_element;
 };
 
+
 int map_contains(Map *this_map, void *key){
     return map_get_node(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key) == -1 ? 0 : 1;
 };
+
 
 int map_isempty(Map *this_map){
     return this_map->elements == 0;
@@ -113,6 +106,7 @@ void rehash(Map *this_map){
     this_map->harray = newLL;
 };
 
+
 double  get_load_factor(Map *this_map){
     if(this_map->elements > 0)
         return (double)this_map->elements / this_map->tablesize;
@@ -120,18 +114,18 @@ double  get_load_factor(Map *this_map){
     return 0.0;
 };
 
-/*
-void print_all_nodes(Map *this_map){
+
+void print_all_nodes(Map *this_map, const char *regex){
     for(int i = 0; i < this_map->tablesize; i++){
         if(this_map->harray[i]){
-            get_iterators(this_map->harray[i]);
-            NODE **t = this_map->harray[i]->Iterator;
-            for(int j = 0; j < this_map->harray[i]->elements; j++)
-                printf("%15s %8d %2d\n", t[j]->key, t[j]->value, j);
+            NODE **t = set_iterators(this_map->harray[i]);
+            for(int j = 0; j < this_map->harray[i]->elements; j++){
+                printf(regex, t[j]->key, t[j]->value, j);
+            }
         }
     }
 }
-*/
+
 
 int is_prime(int n){
     int i;

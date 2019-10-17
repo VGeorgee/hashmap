@@ -23,5 +23,5 @@ int map_contains(Map *this_map, void *key);
 int map_isempty(Map *this_map);
 void rehash(Map *this_map);
 double get_load_factor(Map *this_map);
-void print_all_nodes(Map *this_map);
+void print_all_nodes(Map *this_map, const char *regex);
 int generate_prime(int );

@@ -10,19 +10,20 @@ LinkedList *new_linked_list(int (* equals)(const void *a, const void*b), int (* 
     return linked_list;
 };
 
-void get_iterators(LinkedList *this_list){
+void *set_iterators(LinkedList *this_list){
 
     if(this_list->HEAD){
         free(this_list->Iterator);
-        NODE **array_of_nodes = malloc(sizeof(NODE *) * this_list->elements);
+        NODE **array_of_nodes = malloc(sizeof(NODE *) * (this_list->elements + 1));
         NODE *node = this_list->HEAD;
 
         int i;
-        for(i = 0; node; node = node->next){
-            array_of_nodes[i++] = node;
-        }
+        for(i = 0;  array_of_nodes[i++] = node; node = node->next);
+
         this_list->Iterator = array_of_nodes;
+        return array_of_nodes;
     }
+    return NULL;
 }
 
 void add_node_pointer(LinkedList *this_list, NODE *np){
