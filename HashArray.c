@@ -80,7 +80,6 @@ int map_isempty(Map *this_map){
 
 void rehash(Map *this_map){
     int i, next_size = generate_prime(this_map->tablesize);
-    printf("REHASH!\n");
     LinkedList **newLL = malloc(sizeof(LinkedList *) * next_size);
 
     for(i = 0; i < next_size; i++){
