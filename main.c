@@ -49,7 +49,7 @@ int main()
     map_put(m, "Hello", 300);
     map_put(m, "World", 400);
     map_put(m, "iremovethis", 80000);
-
+    printf("%s\n", map_contains(m, "Hello") ? "contains" : "not contains");
     printf("%d %s\n", (int)map_get(m, "Hello"), "Hello");
 
     printf("%d %s\n", (int)map_get(m, "World"), "World");
@@ -67,7 +67,7 @@ int main()
 
 
     Map *forintegers = new_map(2, integerequals, hashforintegers);
-    for(i = 0; i < 30000; i++){
+    for(i = 0; i < 100; i++){
         int *p = malloc(sizeof(int));
         *p = i;
         map_put(forintegers, p, 250 + i);

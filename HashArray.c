@@ -69,7 +69,7 @@ void *map_remove(Map *this_map, void *key){
 
 
 int map_contains(Map *this_map, void *key){
-    return map_get_node(this_map->harray[this_map->hashcode(key) % this_map->tablesize], key) == -1 ? 0 : 1;
+    return map_get_node(this_map, key) == -1 ? 0 : 1;
 };
 
 
