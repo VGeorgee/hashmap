@@ -5,7 +5,7 @@
 Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a))
 {
     if(n <= 0){
-        n = 1;
+        n = 10;
     }
     int i;
     Map *new_map = malloc(sizeof(Map));
@@ -80,8 +80,8 @@ int map_isempty(Map *this_map){
 
 void rehash(Map *this_map){
     int i, next_size = generate_prime(this_map->tablesize);
-
-    LinkedList **newLL = malloc(sizeof(LinkedList *) *next_size);
+    printf("REHASH!\n");
+    LinkedList **newLL = malloc(sizeof(LinkedList *) * next_size);
 
     for(i = 0; i < next_size; i++){
         newLL[i] = new_linked_list(this_map->equals, this_map->hashcode);

@@ -23,7 +23,7 @@ int integerequals(const void *a, const void *b){
 
 int main()
 {
-    int i, j;
+    int i;
 
     Map *m = new_map(N, stringequals, hashforstring); // passing equals and hashcode functions for the specified data type (string in this case)
 
@@ -67,7 +67,7 @@ int main()
 
 
     Map *forintegers = new_map(2, integerequals, hashforintegers);
-    for(i = 0; i < 100; i++){
+    for(i = 0; i < 1000; i++){
         int *p = malloc(sizeof(int));
         *p = i;
         map_put(forintegers, p, 250 + i);
@@ -75,7 +75,11 @@ int main()
 
     puts("Elements in integermap:");
     print_all_nodes(forintegers, "%4d %8d %2d\n");
-
+    for(i = 0; i < 1000; i++){
+        int *p = malloc(sizeof(int));
+        *p = i;
+        printf("%d\n", (int *)map_get(forintegers, p));
+    }
 
     return 0;
 }
