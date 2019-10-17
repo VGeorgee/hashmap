@@ -86,7 +86,6 @@ void *get_node(LinkedList *linkedlist, void *node_to_search){
 
 void *remove_node(LinkedList *linkedlist, void *key){
 
-    void *value_from_linkedlist;
     NODE *current = linkedlist->HEAD;
     NODE *elozo = NULL;
 
@@ -100,7 +99,7 @@ void *remove_node(LinkedList *linkedlist, void *key){
 
     if(current){
 
-        value_from_linkedlist = current->value;
+        void * value_from_linkedlist = current->value;
         linkedlist->elements--;
 
         if(elozo){

@@ -5,7 +5,7 @@
 Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a))
 {
     if(n == 0){
-        n = 1;
+        n = 10;
     }
     int i;
     Map *new_map = malloc(sizeof(Map));
@@ -120,6 +120,7 @@ double  get_load_factor(Map *this_map){
     return 0.0;
 };
 
+/*
 void print_all_nodes(Map *this_map){
     for(int i = 0; i < this_map->tablesize; i++){
         if(this_map->harray[i]){
@@ -130,6 +131,7 @@ void print_all_nodes(Map *this_map){
         }
     }
 }
+*/
 
 int is_prime(int n){
     int i;

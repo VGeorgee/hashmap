@@ -23,7 +23,6 @@ int main()
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
 
     int valuenumber = 200;
-    char *mykey = "ASDASDASD";
 
     NODE *n1 = create_new_node("HELLO WORLD", &valuenumber);
     NODE *n2 = create_new_node("anotherstring", &valuenumber);
@@ -44,15 +43,15 @@ int main()
     map_put(m, "World", 400);
     map_put(m, "iremovethis", 80000);
 
-    printf("%d %s\n", map_get(m, "Hello"), "Hello");
+    printf("%d %s\n", (int)map_get(m, "Hello"), "Hello");
 
-    printf("%d %s\n", map_get(m, "World"), "World");
-    printf("%d %s\n", map_get(m, "iremovethis"), "iremovethis");
+    printf("%d %s\n", (int)map_get(m, "World"), "World");
+    printf("%d %s\n", (int)map_get(m, "iremovethis"), "iremovethis");
 
     void *removed = map_remove(m, "This is not in the map");
-    printf("removed: %p\n", removed);
+    printf("removed: %p\n", (int)removed);
     removed = map_remove(m, "iremovethis");
-    printf("removed: %d\n", removed);
+    printf("removed: %d\n", (int)removed);
 
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
 

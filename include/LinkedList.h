@@ -6,14 +6,8 @@ typedef struct node
 {
     void *key;
     void *value;
-
-
-/*
-    char *str;
-    int data;
-*/
-
     struct node *next;
+    
 } NODE;
 
 typedef struct linkedlist
