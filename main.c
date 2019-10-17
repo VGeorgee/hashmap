@@ -78,7 +78,7 @@ int main()
     for(i = 0; i < 1000; i++){
         int *p = malloc(sizeof(int));
         *p = i;
-        printf("%d\n", (int *)map_get(forintegers, p));
+        printf("%d\n", (int)map_get(forintegers, p));
     }
 
     return 0;
