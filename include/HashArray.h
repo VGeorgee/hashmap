@@ -10,8 +10,7 @@ typedef struct map{
     int (* hashcode)(const void *a);
 }Map;
 
-
-Map * new_map();
+Map * new_map(int n, int (* equals)(const void *a, const void *b), int (* hashcode)(const void *a));
 
 
 void map_put(Map *this_map, void *key, void *value);
