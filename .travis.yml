@@ -3,5 +3,9 @@ compiler: gcc
 
 script: gcc main.c HashArray.c LinkedList.c -o main
 script:
-  - gcc main.c HashArray.c LinkedList.c -o main
+  - gcc -coverage main.c HashArray.c LinkedList.c -o main 
+  - gcov main.c
   - ./main
+
+  after_success:
+  - bash <(curl -s https://codecov.io/bash)
