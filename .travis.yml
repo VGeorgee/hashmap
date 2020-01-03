@@ -5,5 +5,5 @@ script:
   - gcc main.c HashArray.c LinkedList.c -o main
   - ./main
 
-  after_success:
+after_success:
   - bash <(curl -s https://codecov.io/bash)
