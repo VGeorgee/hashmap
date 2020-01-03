@@ -70,15 +70,6 @@ int main()
     printf("removed: %d\n", (int)removed);
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
 
-
-
-    printf("sizeof map: %d\n", sizeof(Map));
-    printf("sizeof LL: %d\n", sizeof(LinkedList));
-    printf("sizeof node: %d\n", sizeof(NODE));
-
-/**
-
-
     puts("Elements in map:");
     print_all_nodes(m, "%15s %8d %2d\n");
 
@@ -96,7 +87,7 @@ int main()
         *p = i;
         printf("%d\n", (int)map_get(forintegers, p));
     }
-*/
+
 
 
 
