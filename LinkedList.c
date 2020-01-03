@@ -59,17 +59,6 @@ NODE *get_node_pointer(LinkedList *this_list, void *key){
 };
 
 
-int add_new_node(LinkedList *this_list, void *key, void *value){
-
-    NODE *new_node = malloc(sizeof(NODE));
-    new_node->value = value;
-    new_node->key = key;
-    new_node->next = this_list->HEAD;
-    this_list->HEAD = new_node;
-    return this_list->elements++;
-
-};
-
 void *get_node(LinkedList *this_list, void *node_to_search){
 
     NODE *current = this_list->HEAD;
