@@ -2,7 +2,8 @@ language: C
 compiler: gcc
 
 script:
-  - gcc main.c HashArray.c LinkedList.c -o main
+  - gcc -coverage main.c HashArray.c LinkedList.c -o main
+  - gcov main.c
   - ./main
 
 after_success:
