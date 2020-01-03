@@ -3,7 +3,7 @@ compiler: gcc
 
 script:
   - gcc -coverage main.c HashArray.c LinkedList.c -o main
-  - gcov main.c
+  - gcov main
   - ./main
 
 after_success:
