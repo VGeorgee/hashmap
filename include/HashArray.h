@@ -17,7 +17,7 @@ typedef struct map{
 
 
 
-Map * new_map(uint32_t n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a));
+Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a));
 
 void map_put(Map *this_map, void *key, void *value);
 void map_put_node(Map *this_map, NODE *);

@@ -2,11 +2,12 @@
 #define NextNPrime 5
 #define MAXLOADFACTOR 0.75
 
-Map * new_map(uint32_t n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a))
+Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a))
 {
     if(n <= 0){
         n = 10;
     }
+    
     int i;
     Map *new_map = malloc(sizeof(Map));
     new_map->harray = malloc(sizeof(LinkedList *) * n);
