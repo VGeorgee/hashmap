@@ -1,6 +1,6 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 typedef struct node
 {
@@ -12,14 +12,13 @@ typedef struct node
 
 typedef struct linkedlist
 {
+    uint32_t elements;
     NODE *HEAD;
     NODE **Iterator;
-    int elements;
 
     int (* equals)(const void *a, const void *b);
     int (* hashcode)(const void *a);
 } LinkedList;
-
 
 
 LinkedList * new_linked_list(int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a));      // Initialize a LinkedList and returns its pointer

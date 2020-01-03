@@ -2,7 +2,7 @@
 #define NextNPrime 5
 #define MAXLOADFACTOR 0.75
 
-Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a))
+Map * new_map(uint32_t n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a))
 {
     if(n <= 0){
         n = 10;
@@ -69,7 +69,7 @@ void *map_remove(Map *this_map, void *key){
 
 
 int map_contains(Map *this_map, void *key){
-    return map_get_node(this_map, key) == -1 ? 0 : 1;
+    return map_get_node(this_map, key) == (void *)-1 ? 0 : 1;
 };
 
 

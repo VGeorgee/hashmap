@@ -1,18 +1,23 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
 #include "LinkedList.h"
 
+#pragma pack(push, 2)
 typedef struct map{
     LinkedList **harray;
-    int tablesize;
-    int elements;
+    uint32_t tablesize;
+    uint32_t elements;
     double maxloadfactor;
 
     int (* equals)(const void *a, const void *b);
     int (* hashcode)(const void *a);
 }Map;
+#pragma pack(pop)
 
 
-Map * new_map();
 
+Map * new_map(uint32_t n, int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a));
 
 void map_put(Map *this_map, void *key, void *value);
 void map_put_node(Map *this_map, NODE *);

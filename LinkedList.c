@@ -13,12 +13,14 @@ LinkedList *new_linked_list(int (* equals)(const void *a, const void*b), int (* 
 void *set_iterators(LinkedList *this_list){
 
     if(this_list->HEAD){
-        free(this_list->Iterator);
+        if(this_list->Iterator != NULL){
+            free(this_list->Iterator);
+        }
         NODE **array_of_nodes = malloc(sizeof(NODE *) * (this_list->elements + 1));
         NODE *node = this_list->HEAD;
 
         int i;
-        for(i = 0;  array_of_nodes[i++] = node; node = node->next);
+        for(i = 0;  (array_of_nodes[i++] = node); node = node->next);
 
         this_list->Iterator = array_of_nodes;
         return array_of_nodes;
