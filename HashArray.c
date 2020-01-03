@@ -78,7 +78,7 @@ int map_isempty(Map *this_map){
 };
 
 
-void rehash(Map *this_map){
+static void rehash(Map *this_map){
     int i, next_size = generate_prime(this_map->tablesize);
     LinkedList **newLL = malloc(sizeof(LinkedList *) * next_size);
 
@@ -106,7 +106,7 @@ void rehash(Map *this_map){
 };
 
 
-double  get_load_factor(Map *this_map){
+static double  get_load_factor(Map *this_map){
     if(this_map->elements > 0)
         return (double)this_map->elements / this_map->tablesize;
 
@@ -126,7 +126,7 @@ void print_all_nodes(Map *this_map, const char *regex){
 }
 
 
-int is_prime(int n){
+static int is_prime(int n){
     int i;
     for(i = 2; i <= n/2; i++)
     {
@@ -136,7 +136,7 @@ int is_prime(int n){
     return 1;
 };
 
-int generate_prime(int n){
+static int generate_prime(int n){
     int k = 0, np = n;
     while(k < NextNPrime)
     {

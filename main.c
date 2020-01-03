@@ -1,7 +1,7 @@
 #include "include/HashArray.h"
 #define N 1
 
-int hashforstring(char *s){
+int hashforstring(const char *s){
     int i = 0, hash = 0, g = 31;
     while(s[i]) hash = g * hash + s[i++];
 
