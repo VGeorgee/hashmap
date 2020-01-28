@@ -1,9 +1,11 @@
+#include <stdio.h>
 #include "HashArray.h"
 #define N 1
 
-int hashforstring(const char *s){
+int hashforstring(const void *s){
+    char *t = (char *)s;
     int i = 0, hash = 0, g = 31;
-    while(s[i]) hash = g * hash + s[i++];
+    while(t[i]) hash = g * hash + t[i++];
 
     return hash & 0x7fffffff;
 };
@@ -12,8 +14,9 @@ int stringequals(const void *a, const void *b){
     return strcmp(a, b) == 0;
 }
 
-int hashforintegers(int *n){
-    return (*n) &0x7fffffff;
+int hashforintegers(const void *n){
+    int *num = (int *)n;
+    return (*num) &0x7fffffff;
 }
 
 int integerequals(const void *a, const void *b){
@@ -25,10 +28,10 @@ int main()
 {
     int i;
 
-     new_map(-1, stringequals, hashforstring);
-     new_map(-2, stringequals, hashforstring);
-      new_map(0, stringequals, hashforstring);
-       new_map(1, stringequals, hashforstring);
+    new_map(-1, stringequals, hashforstring);
+    new_map(-2, stringequals, hashforstring);
+    new_map(0, stringequals, hashforstring);
+    new_map(1, stringequals, hashforstring);
 
        puts("ASDA");
     Map *m = new_map(N, stringequals, hashforstring); // passing equals and hashcode functions for the specified data type (string in this case)
@@ -49,35 +52,35 @@ int main()
     NODE *found = map_get_node(m, n1->key);
 
     if(found)
-        printf("%d %s\n", *(int *) found->value, n1->key);
+        printf("%d %s\n", *(int *) found->value, (char *) n1->key);
 
     found = map_get_node(m, "HELLO WORLD2");
     if(found)
         printf("%d %s\n", *(int *) found->value, "HELLO WORLD2");
 
-    map_put(m, "Hello", 300);
-    map_put(m, "World", 400);
-    map_put(m, "iremovethis", 80000);
+    map_put(m, "Hello", (void *) 300);
+    map_put(m, "World", (void *) 400);
+    map_put(m, "iremovethis", (void *) 80000);
     printf("%s\n", map_contains(m, "Hello") ? "contains" : "not contains");
-    printf("%d %s\n", (int)map_get(m, "Hello"), "Hello");
+    printf("%p %s\n", map_get(m, "Hello"), "Hello");
 
-    printf("%d %s\n", (int)map_get(m, "World"), "World");
-    printf("%d %s\n", (int)map_get(m, "iremovethis"), "iremovethis");
+    printf("%p %s\n", map_get(m, "World"), "World");
+    printf("%p %s\n", map_get(m, "iremovethis"), "iremovethis");
 
     void *removed = map_remove(m, "This is not in the map");
     printf("removed: %p\n", removed);
     removed = map_remove(m, "iremovethis");
-    printf("removed: %d\n", (int)removed);
+    printf("removed: %p\n", removed);
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
 
     puts("Elements in map:");
     print_all_nodes(m, "%15s %8d %2d\n");
 
     Map *forintegers = new_map(2, integerequals, hashforintegers);
-    for(i = 0; i < 1000; i++){
+    for(i = 250; i < 1250; i++){
         int *p = malloc(sizeof(int));
         *p = i;
-        map_put(forintegers, p, 250 + i);
+        map_put(forintegers, p, (void *)i);
     }
 
     puts("Elements in integermap:");
@@ -85,7 +88,7 @@ int main()
     for(i = 0; i < 1000; i++){
         int *p = malloc(sizeof(int));
         *p = i;
-        printf("%d\n", (int)map_get(forintegers, p));
+        printf("%p\n", map_get(forintegers, p));
     }
 
 
