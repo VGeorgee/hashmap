@@ -1,4 +1,4 @@
-#include "include/HashArray.h"
+#include "HashArray.h"
 #define N 1
 
 int hashforstring(const char *s){

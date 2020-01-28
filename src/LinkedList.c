@@ -1,4 +1,4 @@
-#include "include/LinkedList.h"
+#include "LinkedList.h"
 
 LinkedList *new_linked_list(int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a)){
     LinkedList *linked_list = malloc(sizeof(LinkedList));

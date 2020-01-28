@@ -1,4 +1,4 @@
-#include "include/HashArray.h"
+#include "HashArray.h"
 #define NextNPrime 5
 #define MAXLOADFACTOR 0.75
 

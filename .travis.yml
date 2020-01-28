@@ -2,9 +2,9 @@ language: C
 compiler: gcc
 
 script:
-  - gcc -coverage main.c HashArray.c LinkedList.c -o main
-  - gcov main
-  - ./main
+  - gcc -coverage -I ./include test.c src/HashArray.c src/LinkedList.c -o test
+  - gcov test
+  - ./test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
