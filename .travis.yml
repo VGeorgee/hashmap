@@ -2,7 +2,7 @@ language: C
 compiler: gcc
 
 script:
-  - gcc -coverage -I ./include test.c src/HashArray.c src/LinkedList.c -o test
+  - gcc -coverage -I ./include test.c src/*.c -o test
   - gcov test
   - ./test
 
