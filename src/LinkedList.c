@@ -108,5 +108,3 @@ void *remove_node(LinkedList *this_list, void *key){
 
     return NULL;
 };
-
-

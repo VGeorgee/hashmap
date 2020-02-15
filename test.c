@@ -28,16 +28,7 @@ int main()
 {
     int i;
 
-    new_map(-1, stringequals, hashforstring);
-    new_map(-2, stringequals, hashforstring);
-    new_map(0, stringequals, hashforstring);
-    new_map(1, stringequals, hashforstring);
-
-       puts("ASDA");
     Map *m = new_map(N, stringequals, hashforstring); // passing equals and hashcode functions for the specified data type (string in this case)
-
-
-
 
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
 
