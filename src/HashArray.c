@@ -25,6 +25,14 @@ Map * new_map(int n, int (* equals)(const void *a, const void*b), int (* hashcod
     return new_map;
 };
 
+void delete_map(Map *this_map){
+    free(this_map->harray);
+    this_map->elements = 0;
+    this_map->tablesize = 0;
+    this_map->maxloadfactor = 0;
+    this_map->equals = NULL;
+    this_map->hashcode = NULL;
+}
 
 void map_put(Map *this_map, void *key, void *value)
 {

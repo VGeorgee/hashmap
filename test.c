@@ -28,6 +28,11 @@ int main()
 {
     int i;
 
+    delete_map( new_map(-1, stringequals, hashforstring));
+    delete_map( new_map(-2, stringequals, hashforstring));
+    delete_map( new_map(0, stringequals, hashforstring));
+    delete_map( new_map(1, stringequals, hashforstring));
+
     Map *m = new_map(N, stringequals, hashforstring); // passing equals and hashcode functions for the specified data type (string in this case)
 
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
@@ -81,9 +86,6 @@ int main()
         *p = i;
         printf("%p\n", map_get(forintegers, p));
     }
-
-
-
 
     return 0;
 }
