@@ -123,17 +123,6 @@ static double  get_load_factor(Map *this_map){
 };
 
 
-void print_all_nodes(Map *this_map, const char *regex){
-    for(int i = 0; i < this_map->tablesize; i++){
-        if(this_map->harray[i]){
-            NODE **t = set_iterators(this_map->harray[i]);
-            for(int j = 0; j < this_map->harray[i]->elements; j++){
-                printf(regex, t[j]->key, t[j]->value, j);
-            }
-        }
-    }
-}
-
 
 static int is_prime(int n){
     int i;

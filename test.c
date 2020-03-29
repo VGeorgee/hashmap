@@ -90,3 +90,14 @@ int main()
     return 0;
 }
 
+
+/*
+
+add_executable(Hashmap_implementation_in_C
+        include/HashArray.h
+        include/LinkedList.h
+        src/HashArray.c
+        src/LinkedList.c
+        test.c)
+
+ */

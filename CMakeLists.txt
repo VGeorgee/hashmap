@@ -5,9 +5,8 @@ set(CMAKE_C_STANDARD 11)
 
 include_directories(include)
 
-add_executable(Hashmap_implementation_in_C
-        include/HashArray.h
+
+add_library(hashMap include/HashArray.h
         include/LinkedList.h
         src/HashArray.c
-        src/LinkedList.c
-        test.c)
+        src/LinkedList.c)
