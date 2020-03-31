@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 11)
 include_directories(include)
 
 
-add_library(hashMap include/HashArray.h
+add_library(hashmap include/HashArray.h
         include/LinkedList.h
         src/HashArray.c
         src/LinkedList.c)

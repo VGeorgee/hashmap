@@ -70,7 +70,6 @@ int main()
     printf("%s\n", map_isempty(m) ? "Empty Map" : "Unempty Map");
 
     puts("Elements in map:");
-    print_all_nodes(m, "%15s %8d %2d\n");
 
     Map *forintegers = new_map(2, integerequals, hashforintegers);
     for(i = 250; i < 1250; i++){
@@ -80,7 +79,6 @@ int main()
     }
 
     puts("Elements in integermap:");
-    print_all_nodes(forintegers, "%4d %8d %2d\n");
     for(i = 0; i < 1000; i++){
         int *p = malloc(sizeof(int));
         *p = i;
