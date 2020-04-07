@@ -25,7 +25,7 @@ creates a new map, returns its pointer.
 
 deletes the map
 
----
+--- 
 
 working with a map:
 the following functions first parameter is always the pointer to an initialized
