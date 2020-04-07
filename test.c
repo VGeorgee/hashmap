@@ -84,6 +84,7 @@ int main()
         *p = i;
         printf("%p\n", map_get(forintegers, p));
     }
+    set_iterators(forintegers);
 
     return 0;
 }
