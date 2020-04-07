@@ -83,7 +83,7 @@ int main()
         *p = i;
         printf("%p\n", map_get(forintegers, p));
     }
-
+    iterator(forintegers);
     return 0;
 }
 
