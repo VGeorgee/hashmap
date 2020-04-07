@@ -4,29 +4,9 @@ LinkedList *new_linked_list(int (* equals)(const void *a, const void*b), int (* 
     LinkedList *linked_list = malloc(sizeof(LinkedList));
     linked_list->elements = 0;
     linked_list->HEAD = NULL;
-    linked_list->Iterator = NULL;
     linked_list->equals = equals;
-    linked_list->hashcode = hashcode;
     return linked_list;
 };
-
-void *set_iterators(LinkedList *this_list){
-
-    if(this_list->HEAD){
-        if(this_list->Iterator != NULL){
-            free(this_list->Iterator);
-        }
-        NODE **array_of_nodes = malloc(sizeof(NODE *) * (this_list->elements + 1));
-        NODE *node = this_list->HEAD;
-
-        int i;
-        for(i = 0;  (array_of_nodes[i++] = node); node = node->next);
-
-        this_list->Iterator = array_of_nodes;
-        return array_of_nodes;
-    }
-    return NULL;
-}
 
 void add_node_pointer(LinkedList *this_list, NODE *np){
     np->next = this_list->HEAD;

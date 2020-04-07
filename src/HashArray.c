@@ -114,6 +114,23 @@ static void rehash(Map *this_map){
     this_map->harray = newLL;
 };
 
+NODE **iterator(Map *this_map){
+  int i = 0;
+  this_map->iterator = malloc((this_map->elements + 1) * sizeof(NODE *));
+  int iteratorElements = 0;
+  for(; i < this_map->tablesize; i++){
+      LinkedList *pointer;
+      if(pointer = this_map->harray[i]){
+          NODE *element = pointer->HEAD;
+          while(element){
+              this_map->iterator[iteratorElements++] = element;
+              element = element->next;
+          }
+      }
+  }
+  this_map->iterator[iteratorElements] = NULL;
+  return this_map->iterator;
+};
 
 static double  get_load_factor(Map *this_map){
     if(this_map->elements > 0)

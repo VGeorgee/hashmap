@@ -46,7 +46,6 @@ int main()
     map_put_node(m, n2);
 
     NODE *found = map_get_node(m, n1->key);
-    set_iterators(m);
     if(found)
         printf("%d %s\n", *(int *) found->value, (char *) n1->key);
 

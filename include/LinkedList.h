@@ -4,6 +4,7 @@
 
 typedef struct node
 {
+
     void *key;
     void *value;
     struct node *next;
@@ -12,17 +13,15 @@ typedef struct node
 
 typedef struct linkedlist
 {
+
     uint32_t elements;
     NODE *HEAD;
-    NODE **Iterator;
-
     int (* equals)(const void *a, const void *b);
-    int (* hashcode)(const void *a);
+
 } LinkedList;
 
 
 LinkedList * new_linked_list(int (* equals)(const void *a, const void*b), int (* hashcode)(const void *a));      // Initialize a LinkedList and returns its pointer
-void *set_iterators(LinkedList *this_list);    //Allocates LinkedList's iterator array, and fills it with its pointers
 void *get_node(LinkedList *this_list, void *key);  //returns the value of the specified String, if not found, returns NULL
 int add_new_node(LinkedList *this_list, void *key,  void *value);    //adds a Node to the LinkedList in a <String int> pair
 NODE *create_new_node(void *key, void *value);
